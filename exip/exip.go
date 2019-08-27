@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/fatih/color"
 	"github.com/go-external-ip"
-	"net"
 	"os"
 )
+
+var fName string = "public_ip_collection"
 
 func main() {
 	// Create the default consensus,
@@ -15,14 +17,17 @@ func main() {
 	// which is never <nil> when err is <nil>.
 	ip, err := consensus.ExternalIP()
 	if err == nil {
-		fmt.Println(ip.String()) // print IPv4/IPv6 in string format
+		color.Cyan("public ip4: %s", ip.String())
+
+		//fmt.Println(ip.String()) // print IPv4/IPv6 in string format
 	}
 	// convert IP to string
 	l := ip.String()
+	//fmt.Println(l)
+	if fileExists(fName) {
+		color.Cyan("appending to file %s \n", fName)
 
-	if fileExists("public_ip_collection") {
-		fmt.Println("file exists, appending", l)
-		n1, err := os.OpenFile("public_ip_collection", os.O_APPEND|os.O_WRONLY, 0644)
+		n1, err := os.OpenFile(fName, os.O_APPEND|os.O_WRONLY, 0644)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -31,35 +36,24 @@ func main() {
 
 	} else {
 		fmt.Println("creating file")
-		f, err := os.Create("public_ip_collection")
+		f, err := os.Create(fName)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
+
 		n2, err := f.WriteString(l)
 		if err == nil {
 			fmt.Printf("wrote %d bytes\n", n2)
 		}
 		f.Close()
 	}
-	fmt.Println("attempting to get information on:", l)
-	ipinfo(l)
-
 }
+
 func fileExists(filename string) bool {
 	info, err := os.Stat(filename)
 	if os.IsNotExist(err) {
 		return false
 	}
 	return !info.IsDir()
-	}
-
-func ipinfo(i string) {
-	ips, err := net.LookupAddr(i)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not get IPs: %v\n", err)
-		os.Exit(1)
-	}
-	fmt.Println(ips)
-
 }
