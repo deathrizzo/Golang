@@ -1,17 +1,43 @@
 package main
 
 import (
-		"fmt"
+	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
 )
 
+type allVolumes struct {
+	VolumeId []string
+	State string
+	Total int
+	Available int
+	Used int
+}
+
+func main () {
+	av := allVolumes{
+		VolumeId:  nil,
+		State:     "",
+		Total:     0,
+		Available: 0,
+		Used:      0,
+	}
+
+	results := getVols()
+	fmt.Println(results)
+	av.Total = totalVols(results)
+	fmt.Println(av.Total)
+	av.VolumeId = getVolumeids(results)
+	fmt.Println(av.VolumeId)
+	//fmt.Println(av.Count)
+	//available := state(results)
+	//fmt.Println(available)
+}
 
 
-
-func main() {
+func getVols() []*ec2.Volume {
 	svc := ec2.New(session.New(&aws.Config{
 		Region: aws.String("us-west-2"),
 	}))
@@ -30,16 +56,49 @@ func main() {
 			// Message from an error.
 			fmt.Println(err.Error())
 		}
-		a := result.Volumes
-		return
 	}
+	results := result.Volumes
+	return results
 }
 
+func totalVols (results []*ec2.Volume) int {
+	ct := 0
+	for range results {
+		ct++
+	}
+	return ct
+}
+
+func availableState(results []*ec2.Volume) int {
+	available := 0
+	for _, i := range results {
+		st := *i.State
+		if st == "available" {
+			available++
+		}
+	}
+	return available
+}
+
+func getVolumeids(results []*ec2.Volume) []string {
+	var ids []string
+	for _, i := range results {
+		ids = append(ids, *i.VolumeId)
+	}
+	return ids
+}
+
+
+
+
+/*
 func All(a *[]string) {
 	for _, i := range a {
 		fmt.Println(i)
 	}
 }
+
+ */
 	/*
 	//fmt.Println(result.Volumes)
 	//ids := []string {}
@@ -49,7 +108,7 @@ func All(a *[]string) {
 	for _, i := range result.Volumes {
 		totalVolumes++
 		//vids := *i.VolumeId
-		st := *i.State
+		st := *i.State/
 		ct := *i.CreateTime
 		if st == "available" {
 			availableVolumes++
@@ -58,7 +117,7 @@ func All(a *[]string) {
 
 		}
 		fmt.Println(st)
-		fmt.Println(ct)
+		/fmt.Println(ct)
 	}
 	fmt.Println("Total Volumes: ", totalVolumes)
 	fmt.Println("Total Available: ", availableVolumes)
