@@ -6,6 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/fatih/color"
 )
 
 type allVolumes struct {
@@ -15,7 +16,6 @@ type allVolumes struct {
 	Available int
 	Used int
 	Size int64
-	Iops int
 }
 
 func main () {
@@ -28,19 +28,16 @@ func main () {
 		Size:      0,
 	}
 	results := getVols()
-	fmt.Println(results)
+	fmt.Println(results) //here to get json structure if needed.
 	av.Total = totalVols(results)
-	fmt.Println("Total Volumes: ",av.Total)
-	av.VolumeId = availableVolumeids(results)
-	fmt.Println(av.VolumeId)
 	av.Available, av.Used = volState(results)
-	fmt.Println("Volumes Available: ",av.Available)
-	fmt.Println("Volumes Used:", av.Used)
 	av.Size = totalgp2Size(results)
+	//	av.VolumeId = availableVolumeids(results)
+	color.Green("Total Volumes: %d", av.Total)
+	color.Yellow("Volumes Used: %d", av.Used)
+	color.Red("Volumes Available: %d",av.Available)
 	fmt.Println("Total GP2 Size: ", av.Size)
-	//fmt.Println(av.Count)
-	//available := state(results)
-	//fmt.Println(available)
+	//	fmt.Println(av.VolumeId)
 }
 
 
@@ -59,8 +56,6 @@ func getVols() []*ec2.Volume {
 				fmt.Println(aerr.Error())
 			}
 		} else {
-			// Print the error, cast err to awserr.Error to get the Code and
-			// Message from an error.
 			fmt.Println(err.Error())
 		}
 	}
@@ -112,6 +107,9 @@ func totalgp2Size(results []*ec2.Volume) int64 {
 	}
 	return sz
 }
+
+
+
 /*
 func getTime(results []*ec2.Volume) string {
 
