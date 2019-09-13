@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/fatih/color"
-	"github.com/go-external-ip"
+	"github.com/glendc/go-external-ip"
 	"os"
 )
 
