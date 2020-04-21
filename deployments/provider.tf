@@ -2,7 +2,7 @@ provider "aws" {
   region = "us-west-2"
 
   assume_role {
-    role_arn     = "arn:aws:iam::595072229124:user/elzwhere"
+    role_arn     = "arn:aws:iam::595072229124:role/elzwhere"
     session_name = "srv_kubernetes_management"
   }
 }
@@ -19,7 +19,7 @@ terraform {
   }
 
   backend "s3" {
-    role_arn       = "arn:aws:iam::595072229124:user/elzwhere"
+    role_arn       = "arn:aws:iam::595072229124:role/elzwhere"
     session_name   = "srv_kubernetes_management"
     bucket         = "elzwhere"
     key            = "terraform/elzwhere.tfstate"

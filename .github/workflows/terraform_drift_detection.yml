@@ -1,32 +1,23 @@
-name: Terraform Build
+name: Terraform Detect Drift
 on:
-  pull_request:
-    paths:
-      - 'deployments/*.tf'
-      - '.github/workflows/terraform*'
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    # Runs at 9 AM Pacific Time every weekday
+    - cron:  '0 16 * * 1-5'
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - name: terraform-fmt
-      uses: hashicorp/terraform-github-actions@v0.6.3
-      with:
-        tf_actions_version: 0.12.18
-        tf_actions_subcommand: 'fmt'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build:
-    needs: [lint]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         folders:
-          - deployments/
+                - deployments/
     steps:
     - uses: actions/checkout@master
+      with:
+        # Only run against the master branch
+        ref: master
     - name: Setup SSH
       uses: ./.github/actions/bin/sh
       env:
@@ -48,22 +39,21 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa"
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: terraform-validate
-      uses: hashicorp/terraform-github-actions@v0.6.3
-      with:
-        tf_actions_version: 0.12.18
-        tf_actions_working_dir: ${{ matrix.folders }}
-        tf_actions_subcommand: 'validate'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TF_ACTION_WORKING_DIR: ${{ matrix.folders }}
-    - name: terraform-plan
-      uses: ./.github/actions/terraform/plan
+    - name: terraform-plan-output
+      uses: ./.github/actions/terraform/plan-output
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         TF_ACTION_WORKING_DIR: ${{ matrix.folders }}
-        TF_SKIP_COMMENT_IF_NO_CHANGES: 1
+    - name: Shell
+      if: failure()
+      uses: ./.github/actions/bin/sh
       with:
-        args: '-lock=false'
+        args: '"cat .github/drift_detection_header.md ${GITHUB_WORKSPACE}/tf_plan_output.txt > ${GITHUB_WORKSPACE}/issue.md"'
+    - uses: JasonEtco/create-an-issue@v2.0.0
+      if: failure()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        filename: issue.md
