@@ -2,7 +2,7 @@ name: Terraform Build
 on:
   pull_request:
     paths:
-      - 'clusters/**/*.tf'
+      - 'deployments/*.tf'
       - '.github/workflows/terraform*'
 
 jobs:
