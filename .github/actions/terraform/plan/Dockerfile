@@ -25,7 +25,7 @@ ARG AWSCLI_VERSION=1.16.238
 # for authenticating with EKS as opposed to using aws-iam-authenticator
 RUN apt-get update && apt-get install -y \
       curl=7.58.0-2ubuntu3.8 \
-      git=1:2.17.1-1ubuntu0.5 \
+      git=1:2.17.1-1ubuntu0.4 \
       openssh-client=1:7.6p1-4ubuntu0.3 \
       unzip=6.0-21ubuntu1 \
       python3-setuptools=39.0.1-2 \
