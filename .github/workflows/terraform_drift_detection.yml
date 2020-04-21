@@ -1,0 +1,59 @@
+name: Terraform Detect Drift
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    # Runs at 9 AM Pacific Time every weekday
+    - cron:  '0 16 * * 1-5'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        folders:
+                - deployments/
+    steps:
+    - uses: actions/checkout@master
+      with:
+        # Only run against the master branch
+        ref: master
+    - name: Setup SSH
+      uses: ./.github/actions/bin/sh
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      with:
+        args: '"
+              mkdir -p $HOME/.ssh;
+              echo \"$SSH_PRIVATE_KEY\" > $HOME/.ssh/id_rsa;
+              chmod 400 $HOME/.ssh/id_rsa;
+              "'
+    - name: terraform-init
+      uses: hashicorp/terraform-github-actions@v0.6.3
+      with:
+        tf_actions_version: 0.12.18
+        tf_actions_working_dir: ${{ matrix.folders }}
+        tf_actions_subcommand: 'init'
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: terraform-plan-output
+      uses: ./.github/actions/terraform/plan-output
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        TF_ACTION_WORKING_DIR: ${{ matrix.folders }}
+    - name: Shell
+      if: failure()
+      uses: ./.github/actions/bin/sh
+      with:
+        args: '"cat .github/drift_detection_header.md ${GITHUB_WORKSPACE}/tf_plan_output.txt > ${GITHUB_WORKSPACE}/issue.md"'
+    - uses: JasonEtco/create-an-issue@v2.0.0
+      if: failure()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        filename: issue.md
