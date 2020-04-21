@@ -24,4 +24,10 @@ resource "aws_security_group" "flaming_elk_sg" {
     protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+    ingress {
+    from_port   = "21"
+    to_port     = "21"
+    protocol    = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
