@@ -1,13 +1,13 @@
 resource "aws_security_group" "flaming_elk_sg" {
-  name = "flaming_elk_sg"
+  name        = "flaming_elk_sg"
   description = "Open ports for logstash,kibana,ssh"
-  vpc_id = "vpc-19c73e7c"
+  vpc_id      = "vpc-19c73e7c"
 
   ingress {
-        from_port = 5601
-        to_port = 5601
-        protocol = "TCP"
-        cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 5601
+    to_port     = 5601
+    protocol    = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
     from_port   = "22"
@@ -16,12 +16,12 @@ resource "aws_security_group" "flaming_elk_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-    ingress {
+  ingress {
     from_port   = "20"
     to_port     = "20"
     protocol    = "TCP"
