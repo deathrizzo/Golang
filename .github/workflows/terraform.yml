@@ -66,4 +66,4 @@ jobs:
         TF_ACTION_WORKING_DIR: ${{ matrix.folders }}
         TF_SKIP_COMMENT_IF_NO_CHANGES: 1
       with:
-        args: '-lock-timeout=30m'
+        args: '-lock=false'
