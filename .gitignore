@@ -1,0 +1,5 @@
+*.tfstate
+/deployments/variables.tf
+.terraform
+.idea
+.DS_STORE
