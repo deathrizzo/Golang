@@ -1,8 +1,5 @@
 resource "aws_security_group" "flaming_elk_sg" {
   name = "flaming_elk_sg"
-  tags {
-        Name = "flaming_elk_sg"
-  }
   description = "Open ports for logstash,kibana,ssh"
   vpc_id = "vpc-19c73e7c"
 
@@ -29,5 +26,8 @@ resource "aws_security_group" "flaming_elk_sg" {
     to_port     = "20"
     protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "flaming_elk_sg"
   }
 }
