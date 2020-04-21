@@ -1,0 +1,20 @@
+name: Noop
+on: [pull_request]
+
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+
+# We run a noop workflow, because we want to enable the status check that a
+# branch has to be up to date, which guarantees that PRs are merged in with the
+# latest possible state of the world.  However, at least one status check must
+# be required to pass on merge, in order for GH to enforce that a branch is up
+# to date as per GH's documentation:
+
+# https://github.com/iStreamPlanet/kubernetes_management/settings/branch_protection_rules/6524370
+# Require branches to be up to date before merging
+# This ensures pull requests targeting a matching branch have been tested with
+# the latest code. This setting will not take effect unless at least one status
+# check is enabled (see below).
