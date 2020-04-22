@@ -46,6 +46,8 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         TF_ACTION_WORKING_DIR: ${{ matrix.folders }}
+      with:
+        args: '-lock=false'
     - name: Shell
       if: failure()
       uses: ./.github/actions/bin/sh
