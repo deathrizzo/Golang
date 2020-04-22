@@ -48,26 +48,3 @@ jobs:
         TF_ACTION_WORKING_DIR: ${{ matrix.folders }}
       with:
         args: '-lock-timeout=30m'
-    - name: Generate helm auth configuration
-      uses: ./.github/actions/generate_auth_config
-      id: gen_config
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        TERRAFORM_PATH: ${{ matrix.folders }}
-    - name: Shell
-      if: steps.gen_config.outputs.do_create_issue == 1
-      uses: ./.github/actions/bin/sh
-      with:
-        args: '"cat .github/helm_auth.md ${GITHUB_WORKSPACE}/auth_config_issue.md > ${GITHUB_WORKSPACE}/issue.md"'
-    - name: Shell
-      if: steps.gen_config.outputs.do_create_issue == 1
-      uses: ./.github/actions/bin/sh
-      with:
-        args: '"sed -e \"s/{{ ACTOR }}/${GITHUB_ACTOR}/\" -i ${GITHUB_WORKSPACE}/issue.md"'
-    - uses: JasonEtco/create-an-issue@v2.0.0
-      if: steps.gen_config.outputs.do_create_issue == 1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        filename: issue.md
