@@ -1,23 +1,23 @@
-resource "aws_iam_role" "test_role" {
-  name = "test_role"
+resource "aws_iam_role" "orbis-oam" {
+  name = "orbis-oam"
 
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
     {
+      "Effect": "Allow",
       "Action": "sts:AssumeRole",
       "Principal": {
-        "Service": "ec2.amazonaws.com"
+        "Service": "arn:aws:iam::595072229124:role/elzwhere"
       },
-      "Effect": "Allow",
-      "Sid": ""
+      "Action": "sts:AssumeRole"
     }
   ]
 }
 EOF
 
   tags = {
-    tag-key = "tag-value"
+    orbis-service = "oam"
   }
 }
