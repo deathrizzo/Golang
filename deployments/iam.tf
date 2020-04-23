@@ -1,20 +1,16 @@
-resource "aws_iam_policy" "orbis-service" {
+data "aws_iam_policy_document" "instance-assume-role-policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
 
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement" {
-      "Effect": "Allow",
-      "Principal": "AWS": "arn:aws:iam::595072229124:role/elzwhere",
-      "Action": "sts:AssumeRole"
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
   }
 }
-POLICY
+
+resource "aws_iam_role" "orbis-service" {
+  name               = "instance_role"
+  path               = "/system/"
+  assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
 }
-
-resource "aws_iam_role" "orbis-oam" {
-  name               = "orbis-oam"
-  assume_role_policy = "aws_iam_policy.orbis.service.json"
-}
-
-
