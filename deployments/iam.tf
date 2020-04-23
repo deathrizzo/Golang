@@ -3,8 +3,8 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
     actions = ["sts:AssumeRole"]
 
     principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::595072229124:role/elzwhere"]
     }
   }
 }
