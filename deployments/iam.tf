@@ -5,7 +5,7 @@ resource "aws_iam_policy" "orbis-service" {
   "Version": "2012-10-17",
   "Statement" {
       "Effect": "Allow",
-      "Principal": "AWS": "arn:aws:iam::595072229124:role/elzwhere"
+      "Principal": "AWS": "arn:aws:iam::595072229124:role/elzwhere",
       "Action": "sts:AssumeRole"
   }
 }
