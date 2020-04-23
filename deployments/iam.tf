@@ -1,25 +1,23 @@
-resource "aws_iam_role" "orbis-service" {
-  name = [
-    "orbis-oam",
-    "orbis-obm",
-  ]
+resource "aws_iam_policy" "orbis-service" {
 
-  assume_role_policy = <<EOF
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
-  "Statement": [
+  "Statement" [
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::595072229124:role/elzwhere"
+         "AWS": "arn:aws:iam::595072229124:role/elzwhere"
       },
       "Action": "sts:AssumeRole"
     }
   ]
+POLICY
 }
-EOF
 
-  tags = {
-    orbis-service = "oam"
-  }
+resource "aws_iam_role" "orbis-oam" {
+  name               = "orbis-oam"
+  assume_role_policy = "${aws_iam_policy.orbis.service.json}"
 }
+
+
