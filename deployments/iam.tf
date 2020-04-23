@@ -9,7 +9,13 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
   }
 }
 
-resource "aws_iam_role" "orbis-service" {
+resource "aws_iam_role" "orbis-oam" {
+  name               = "orbis-oam"
+  path               = "/system/"
+  assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
+}
+
+resource "aws_iam_role" "orbis-obm" {
   name               = "orbis-oam"
   path               = "/system/"
   assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
