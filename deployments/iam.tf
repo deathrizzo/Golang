@@ -17,7 +17,7 @@ POLICY
 
 resource "aws_iam_role" "orbis-oam" {
   name               = "orbis-oam"
-  assume_role_policy = "${aws_iam_policy.orbis.service.json}"
+  assume_role_policy = "aws_iam_policy.orbis.service.json"
 }
 
 
