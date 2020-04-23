@@ -3,7 +3,7 @@ resource "aws_iam_policy" "orbis-service" {
   policy = <<POLICY
 {
   "Version": "2012-10-17",
-  "Statement" [
+  "Statement" {
     {
       "Effect": "Allow",
       "Principal": {
@@ -11,7 +11,7 @@ resource "aws_iam_policy" "orbis-service" {
       },
       "Action": "sts:AssumeRole"
     }
-  ]
+  }
 POLICY
 }
 
