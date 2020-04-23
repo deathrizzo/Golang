@@ -1,5 +1,8 @@
-resource "aws_iam_role" "orbis-oam" {
-  name = "orbis-oam"
+resource "aws_iam_role" "orbis-service" {
+  name =  [ 
+	"orbis-oam",
+	"orbis-obm",
+  ]
 
   assume_role_policy = <<EOF
 {
