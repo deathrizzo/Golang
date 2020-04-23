@@ -16,7 +16,7 @@ resource "aws_iam_role" "orbis-oam" {
 }
 
 resource "aws_iam_role" "orbis-obm" {
-  name               = "orbis-oam"
+  name               = "orbis-obm"
   path               = "/system/"
   assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
 }
