@@ -8,7 +8,7 @@ resource "aws_iam_role" "orbis-oam" {
     {
       "Effect": "Allow",
       "Principal": {
-        "Service": "arn:aws:iam::595072229124:role/elzwhere"
+        "AWS": "arn:aws:iam::595072229124:role/elzwhere"
       },
       "Action": "sts:AssumeRole"
     }
