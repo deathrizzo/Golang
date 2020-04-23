@@ -10,7 +10,28 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
 }
 
 resource "aws_iam_role" "orbis-service" {
-  name               = "instance_role"
+  name               = "orbis-oam"
   path               = "/system/"
   assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
 }
+resource "aws_iam_role" "orbis-service" {
+  name               = "orbis-obm"
+  path               = "/system/"
+  assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
+}
+resource "aws_iam_role" "orbis-service" {
+  name               = "orbis-oxm"
+  path               = "/system/"
+  assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
+}
+resource "aws_iam_role" "orbis-service" {
+  name               = "orbis-ogm"
+  path               = "/system/"
+  assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
+}
+resource "aws_iam_role" "orbis-service" {
+  name               = "orbis-osm"
+  path               = "/system/"
+  assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
+}
+
