@@ -4,7 +4,6 @@ variable "user_names" {
   default     = ["neo", "trinity", "morpheus"]
 }
 
-
 data "aws_iam_policy_document" "instance-assume-role-policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -21,5 +20,5 @@ resource "aws_iam_role" "example" {
   count              = length(var.user_names)
   name               = var.user_names[count.index]
   assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
-  path               = "/".var.user_names[count.index]
+  path               = "/orbis/*"
 }
