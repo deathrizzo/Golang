@@ -1,9 +1,3 @@
-variable "user_names" {
-  description = "Create IAM users with these names"
-  type        = list(string)
-  default     = ["neo", "trinity", "morpheus"]
-}
-
 data "aws_iam_policy_document" "instance-assume-role-policy" {
   statement {
     actions = ["sts:AssumeRole"]
