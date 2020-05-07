@@ -11,8 +11,8 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
 
 
 resource "aws_iam_role" "example" {
-  count              = length(var.user_names)
-  name               = var.user_names[count.index]
+  count              = length(${var.service_names})
+  name               = ${var.service_names[count.index]}
   assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
   path               = "/orbis/"
 }
