@@ -14,7 +14,6 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
   }
 }
 
-
 resource "aws_iam_role" "example" {
   count              = length(var.service_names)
   name               = var.service_names[count.index]
