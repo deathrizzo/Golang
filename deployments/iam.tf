@@ -19,4 +19,12 @@ resource "aws_iam_role" "example" {
   name               = var.service_names[count.index]
   assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
   path               = "/orbis/"
+
+  tags = {
+    Environment = "${local.environment}"
+    Application = "${local.application}"
+    Team        = "${local.team}"
+    Customer    = "${local.customer}"
+
+  }
 }
