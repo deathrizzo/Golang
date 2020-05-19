@@ -3,13 +3,13 @@ variable "service_names" {
   type        = list(string)
   default     = null
 }
-/*
+
 variable "name" {
   description = "The name of the role."
   type        = string
   default     = null
 }
-*/
+
 variable "service_ids" {
   description = "List of identifiers for principals. e.g. ec2.amazonaws.com."
   type        = list(string)
