@@ -4,7 +4,7 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
 
     principals {
       identifiers = var.service_ids
-      type        = "Service"
+      type        = "AWS"
     }
   }
 }
