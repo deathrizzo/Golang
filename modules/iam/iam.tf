@@ -17,9 +17,11 @@ resource "aws_iam_role" "orbis_roles" {
   tags               = var.tags
 }
 
+/*
 resource "aws_iam_policy_attachment" "policies" {
   name       = "something"
   count      = length(var.policy_arns)
   policy_arn = var.policy_arns[count.index]
-  roles      = aws_iam_role.orbis_roles.name[count.index]
+  roles      = aws_iam_role.orbis_roles[count.index]
 }
+*/
