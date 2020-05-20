@@ -1,6 +1,6 @@
 data "aws_iam_policy_document" "instance-assume-role-policy" {
   statement {
-    actions = ["sts:AssumeRole", "sts:AssumeRoleWithWebIdentity"]
+    actions = ["sts:AssumeRoleWithWebIdentity"]
 
     principals {
       identifiers = var.service_ids
