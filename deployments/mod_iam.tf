@@ -8,6 +8,6 @@ module "service_roles" {
   tags = {
     Environment = "dev"
     Customer    = "dtc"
-    Another     = "tag"
+    Team        = "dtc"
   }
 }
