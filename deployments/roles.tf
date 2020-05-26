@@ -1,4 +1,4 @@
-module "service_roles" {
+module "some_roles" {
   source             = "../modules/roles"
   name               = "complete"
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
