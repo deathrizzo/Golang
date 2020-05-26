@@ -1,10 +1,14 @@
-data "aws_iam_policy_document" "assume-role-policy" {
+data "aws_iam_policy_document" "assume-role-policy-oidc" {
   statement {
+    effect = "Allow"
     actions = ["sts:AssumeRoleWithWebIdentity"]
 
     principals {
-      identifiers = var.service_ids
-      type        = "AWS"
+      type        = "Federated"
+
+      identifiers = [
+        "arn with provider url"
+      ]
     }
   }
 }
@@ -12,7 +16,7 @@ data "aws_iam_policy_document" "assume-role-policy" {
 resource "aws_iam_role" "orbis_roles" {
   count              = length(var.service_names)
   name               = var.service_names[count.index]
-  assume_role_policy = data.aws_iam_policy_document.assume-role-policy.json
+  assume_role_policy = data.aws_iam_policy_document.assume-role-policy-oidc.json
   path               = var.path
   tags               = var.tags
 }
