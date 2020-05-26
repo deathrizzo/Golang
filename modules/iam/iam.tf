@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "instance-assume-role-policy" {
+data "aws_iam_policy_document" "assume-role-policy" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
 
@@ -12,7 +12,7 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
 resource "aws_iam_role" "orbis_roles" {
   count              = length(var.service_names)
   name               = var.service_names[count.index]
-  assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
+  assume_role_policy = data.aws_iam_policy_document.assume-role-policy.json
   path               = var.path
   tags               = var.tags
 }
