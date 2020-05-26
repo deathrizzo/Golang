@@ -11,7 +11,7 @@ module "some_roles" {
 
 data "aws_iam_policy_document" "assume_role_policy" {
   statement {
-    Effect = "Allow"
+    effect = "Allow"
 
     principals {
       type        = "AWS"
