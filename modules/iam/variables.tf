@@ -38,3 +38,9 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "iam_providers" {
+  description = "provider here"
+  type        = list(string)
+  default     = null
+}
