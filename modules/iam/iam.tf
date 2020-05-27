@@ -1,10 +1,10 @@
 data "aws_iam_policy_document" "assume-role-policy-oidc" {
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = ["sts:AssumeRoleWithWebIdentity"]
 
     principals {
-      type        = "AWS"
+      type = "AWS"
 
       identifiers = var.iam_providers
     }
