@@ -4,11 +4,9 @@ data "aws_iam_policy_document" "assume-role-policy-oidc" {
     actions = ["sts:AssumeRoleWithWebIdentity"]
 
     principals {
-      type        = "Federated"
+      type        = "AWS"
 
-      identifiers = [
-        "arn with provider url"
-      ]
+      identifiers = var.iam_providers
     }
   }
 }
