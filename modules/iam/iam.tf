@@ -22,6 +22,6 @@ resource "aws_iam_role" "orbis_roles" {
 resource "aws_iam_policy_attachment" "policies" {
   count      = length(var.service_names)
   name       = var.service_names[count.index]
-  policy_arn = "${element(var.iam_policy_arn, count.index)}"
+  policy_arn = "${element(var.iam_policy_arns, count.index)}"
   roles      = aws_iam_role.orbis_roles[count.index]
 }
