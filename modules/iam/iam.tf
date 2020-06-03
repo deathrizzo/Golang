@@ -21,7 +21,8 @@ resource "aws_iam_role" "orbis_roles" {
 
 
 resource "aws_iam_policy_attachment" "policies" {
-  name       = "something"
+  for_each = var.service_names
+  name = policies.value
   count      = length(var.policy_arns)
   policy_arn = var.policy_arns[count.index]
   roles      = aws_iam_role.orbis_roles[count.index]
