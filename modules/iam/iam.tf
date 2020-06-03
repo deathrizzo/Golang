@@ -25,3 +25,4 @@ resource "aws_iam_policy_attachment" "policies" {
   policy_arn = "${element(var.iam_policy_arns, count.index)}"
   roles      = aws_iam_role.orbis_roles[count.index]
 }
+/* a comment */
