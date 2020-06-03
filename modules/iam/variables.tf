@@ -15,7 +15,7 @@ variable "service_ids" {
   type        = list(string)
 }
 
-variable "policy_arns" {
+variable "iam_policy_arns" {
   description = "List of IAM policy ARNs."
   type        = list(string)
   default     = []

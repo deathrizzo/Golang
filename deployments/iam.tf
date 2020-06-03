@@ -5,7 +5,7 @@ module "service_roles" {
   iam_providers = ["arn:aws:iam::595072229124:role/elzwhere"]
   path          = "/orbis/"
   description   = "service roles"
-  policy_arns   = ["arn:aws:iam::aws:policy/AmazonS3FullAccess", "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"]
+  iam_policy_arns   = ["arn:aws:iam::aws:policy/AmazonS3FullAccess", "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"]
   tags = {
     Environment = "dev"
     Customer    = "dtc"
