@@ -19,16 +19,16 @@ resource "aws_iam_role" "orbis_roles" {
   tags               = var.tags
 }
 
-locals{
-    policies = { for v in var.iam_policy_arns : v => v }
+locals {
+  policies = { for v in var.iam_policy_arns : v => v }
 }
 
 
 
 resource "aws_iam_role_policy_attachment" "role-policy-attachment" {
-  role = "oam"
-  for_each = local.policies
-  policy_arn  = each.key
+  role       = "oam"
+  for_each   = local.policies
+  policy_arn = each.key
 }
 /*
 resource "aws_iam_role_policy_attachment" "role-policy-attachment" {
