@@ -1,7 +1,7 @@
 variable "service_names" {
   description = "service names to role"
-  type        = list(string)
-  default     = null
+  type = list
+  default = null
 }
 
 variable "name" {
@@ -17,8 +17,8 @@ variable "service_ids" {
 
 variable "iam_policy_arns" {
   description = "List of IAM policy ARNs."
-  type        = list(string)
-  default     = []
+  type        = list
+  default = []
 }
 
 variable "path" {
