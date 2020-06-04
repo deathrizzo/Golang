@@ -31,7 +31,7 @@ jobs:
     - name: terraform-init
       uses: hashicorp/terraform-github-actions@v0.6.3
       with:
-        tf_actions_version: 0.12.18
+        tf_actions_version: 0.12.24
         tf_actions_working_dir: ${{ matrix.folders }}
         tf_actions_subcommand: 'init'
       env:
