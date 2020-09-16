@@ -24,12 +24,12 @@ ARG AWSCLI_VERSION=1.16.238
 # Used for installing the latest awscli which we use to get an IAM token
 # for authenticating with EKS as opposed to using aws-iam-authenticator
 RUN apt-get update && apt-get install -y \
-      curl=7.58.0-2ubuntu3.8 \
+      curl=7.58.0-2ubuntu3.10 \
       git=* \
       openssh-client=1:7.6p1-4ubuntu0.3 \
       unzip=6.0-21ubuntu1 \
       python3-setuptools=39.0.1-2 \
-      python3-pip=9.0.1-2.3~ubuntu1.18.04.1 \
+      python3-pip=9.0.1-2.3~ubuntu1.18.04.2 \
       python3-wheel=0.30.0-0.2 \
       --no-install-recommends \
  && apt-get clean \
