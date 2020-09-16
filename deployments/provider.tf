@@ -21,7 +21,7 @@ terraform {
   backend "s3" {
     role_arn       = "arn:aws:iam::595072229124:role/elzwhere"
     session_name   = "srv_kubernetes_management"
-    bucket         = "elzwhere"
+    bucket         = "elzwhere_two"
     key            = "terraform/elzwhere.tfstate"
     region         = "us-west-2"
     dynamodb_table = "terraform_lock"
