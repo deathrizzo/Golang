@@ -1,6 +1,6 @@
 locals {
   environment         = "dev"
-  application         = "site"
+  application         = "web-site"
   team                = "me"
   customer            = "uniquely-flawed"
   data-classification = "restricted"
