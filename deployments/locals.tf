@@ -1,8 +1,8 @@
 locals {
   environment         = "dev"
-  application         = "orbis"
-  team                = "dtc"
-  customer            = "iStreamPlanet"
+  application         = "site"
+  team                = "me"
+  customer            = "uniquely-flawed"
   data-classification = "restricted"
 
   common_tags = {
