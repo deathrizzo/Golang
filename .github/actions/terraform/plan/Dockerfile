@@ -21,7 +21,7 @@ ARG AWSCLI_VERSION=1.16.238
 # Used for installing other tools
 
 ## python3-setuptools, python3-pip, python3-dev
-# Used for installing the latest awscli which we use to get an IAM token
+# Used for installing the latest awscli which use to get an IAM token
 # for authenticating with EKS as opposed to using aws-iam-authenticator
 RUN apt-get update && apt-get install -y \
       curl=7.58.0-2ubuntu3.10 \
